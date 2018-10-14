@@ -52,7 +52,7 @@
                 var b = $(window).height() - t.pos[1];
                 var c = a < t.pos[0] ? t.pos[0] : a;
                 var d = b < t.pos[1] ? t.pos[1] : b;
-                return [c,d];
+                return Math.sqrt(c*c + d*d);
             })(this);
 
             this.pupil = $("<div></div>").addClass("pupil");
@@ -63,10 +63,12 @@
             
             this.update = function(mousePos) {
                 var relpos = [mousePos[0] - this.pos[0], mousePos[1] - this.pos[1]];
+                var dist = Math.sqrt(relpos[0]*relpos[0] + relpos[1]*relpos[1]) / this.normVal * 7 * 8;
+                dist = dist > 7 ? 7 : dist;
                 var o = Math.atan(relpos[1] / relpos[0]);
                 o = relpos[0] < 0 ? o + (Math.PI) : o;
-                $(this.pupil).css("left", 7 + (Math.cos(o) * 7));
-                $(this.pupil).css("top", 7 + (Math.sin(o) * 7));
+                $(this.pupil).css("left", 7 + (Math.cos(o) * dist));
+                $(this.pupil).css("top", 7 + (Math.sin(o) * dist));
             }
         }
         var locs = [[80,80],[90,140],[344,112],[226,229],[493,182],[448,45],[275,90],[629,290],[736,103],[627,77],[729,212],[841,235],[845,112],[654,146],[733,263],[529,224],[458,301],[414,128],[346,215],[541,174],[514,117],[412,56],[343,51],[322,48],[333,55],[209,160],[102,334],[348,366],[148,214],[214,355],[327,271],[514,402],[754,394],[876,329],[664,226],[800,155]];
